@@ -1,0 +1,68 @@
+{% extends './base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h2 class="mb-4">📊 Task Dashboard</h2>
+<!-- <a href="{% url 'task_list' %}" class="nav-link">🏠 Home</a> -->
+<div class="row text-center">
+    <div class="col-md-4">
+        <div class="card bg-light mb-3">
+            <div class="card-body">
+                <h5>Total Tasks</h5>
+                <h2>{{ total }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-success text-white mb-3">
+            <div class="card-body">
+                <h5>Completed</h5>
+                <h2>{{ completed }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-warning text-dark mb-3">
+            <div class="card-body">
+                <h5>Pending</h5>
+                <h2>{{ pending }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+<!-- Chart Section -->
+<!-- <div class="card p-4 shadow-sm">
+    <h5 class="mb-3">Task Completion Overview</h5>
+    <canvas id="taskChart" width="400" height="200"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    const ctx = document.getElementById('taskChart').getContext('2d');
+    const taskChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Completed', 'Pending'],
+            datasets: [{
+                label: 'Tasks',
+                data: [{{ completed }}, {{ pending }}],
+                backgroundColor: ['#198754', '#ffc107'],
+                borderColor: ['#145c32', '#b68b00'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+
+</div> -->
+
+

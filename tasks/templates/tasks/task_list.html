@@ -1,0 +1,75 @@
+{% extends 'tasks/base.html' %}
+
+{% block title %}My Tasks{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">📋 Task List</h2>
+<a href="{% url 'create_task' %}" class="btn btn-primary mb-3">➕ Create New Task</a>
+
+<!-- Search Form -->
+<!-- <form method="GET" class="mb-4 d-flex">
+    <input type="text" name="q" value="{{ query|default_if_none:'' }}" class="form-control me-2" placeholder="Search tasks...">
+    <button type="submit" class="btn btn-outline-primary">Search</button>
+</form> -->
+<form method="GET" class="input-group mb-4">
+  <input type="text" name="q" class="form-control" placeholder="Search tasks..." value="{{ query }}">
+  <button class="btn btn-outline-primary" type="submit">Search</button>
+</form>
+
+
+
+<!-- Task List -->
+{% if page_obj %}
+    <ul class="list-group mb-3">
+        {% for task in page_obj %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="mb-1">{{ task.title }}</h5>
+                    <p class="mb-1 text-muted">{{ task.description }}</p>
+                </div>
+                <div class="text-end">
+                    <span class="badge {% if task.completed %}bg-success{% else %}bg-warning{% endif %} mb-2">
+                        {% if task.completed %}Completed{% else %}Pending{% endif %}
+                    </span>
+                    <div class="btn-group">
+                        <a href="{% url 'update_task' task.pk %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                        <a href="{% url 'delete_task' task.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Pagination -->
+    <nav>
+  <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?q={{ query }}&page=1">&laquo; First</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?q={{ query }}&page={{ page_obj.previous_page_number }}">Previous</a>
+      </li>
+    {% endif %}
+
+    <li class="page-item active">
+      <span class="page-link">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+      </span>
+    </li>
+
+    {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?q={{ query }}&page={{ page_obj.next_page_number }}">Next</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?q={{ query }}&page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>
+
+{% else %}
+    <div class="alert alert-info">No tasks found. <a href="{% url 'create_task' %}">Create one?</a></div>
+{% endif %}
+{% endblock %}
