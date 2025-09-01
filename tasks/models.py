@@ -8,5 +8,7 @@ class Task(models.Model):
     completed: bool = models.BooleanField(default=False)
     user: User = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
+    
+
     def __str__(self):
         return self.title
